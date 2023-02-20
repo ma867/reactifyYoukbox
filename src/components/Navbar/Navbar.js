@@ -2,7 +2,7 @@ import { Container, Navbar, Nav, NavDropdown, Form, Button } from 'react-bootstr
 import { logOut } from '../../utilities/users-service'
 import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-export default function NavBar({ user, setUser }) {
+export default function NavBar({ user, setAuth, auth, setShowModal, setShowUpload, setShowUpdate }) {
     const navbarRef = useRef(null)
     const navigate = useNavigate()
     const [songTitle, setSongTitle] = useState('')
@@ -44,10 +44,21 @@ export default function NavBar({ user, setUser }) {
                     <Nav className="ms-auto" >
                         {
                             !user ?
-                                <Nav.Link href="/auth">Login</Nav.Link>
+
+                                auth ?
+
+
+                                    <Nav.Link href="/home" onClick={() => setAuth(false)}>Home</Nav.Link>
+
+                                    :
+                                    <Nav.Link href="" onClick={() => setAuth(true)}>Login</Nav.Link>
+
+
+
                                 :
                                 <>
-                                    <Nav.Link href="/songs">Songs</Nav.Link>
+                                    <Nav.Link href="" onClick={() => { setShowModal(true); setShowUpload(true); setShowUpdate(false) }}>Upload</Nav.Link>
+                                    <Nav.Link href="/">Songs</Nav.Link>
                                     <Nav.Link href="/playlists">Playlists</Nav.Link>
                                     <Nav.Link href="" onClick={() => { logOut() }}>Log Out</Nav.Link>
 

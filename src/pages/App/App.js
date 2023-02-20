@@ -20,16 +20,15 @@ function App() {
         user ?
 
           (<Routes>
-            <Route path="/songs" element={<MainPage user={user} setUser={setUser} />} />
+            <Route path="/" element={<MainPage user={user} setUser={setUser} />} />
             <Route path="/search/:songTitle" element={<SearchPage user={user} setUser={setUser} />} />
 
           </Routes>
           )
           :
-          (<Routes>
-            <Route path="/" element={<Homepage user={user} setUser={setUser} />} />
-            <Route path="/auth" element={<Auth user={user} setUser={setUser} />} />
-          </ Routes>)
+
+          <Route path="/home" element={<Homepage user={user} setUser={setUser} />} />
+
       }
 
 

@@ -3,21 +3,21 @@ import SignUpForm from "../../components/Auth/SignUp/SignUp"
 import LoginForm from "../../components/Auth/Login/Login"
 import { useState } from "react"
 
-export default function Auth(props) {
+export default function Auth({ user, setUser }) {
     const [visible, setVisible] = useState("login")
 
     return (
         <>
-            {/* <Navbar /> */}
+
             {
                 visible === "login" ?
                     (
 
-                        <LoginForm setUser={props.setUser} setVisible={setVisible} />
+                        <LoginForm setUser={setUser} setVisible={setVisible} />
                     ) :
                     (
 
-                        <SignUpForm setUser={props.setUser} setVisible={setVisible} />
+                        <SignUpForm setUser={setUser} setVisible={setVisible} />
                     )
             }
 

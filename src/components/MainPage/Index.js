@@ -5,28 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
-export default function Index({ user, setUser }) {
+export default function Index({ user, setUser, getUser, songs, setSongs }) {
 
-    const [songs, setSongs] = useState([])
-    const getUser = async () => {
 
-        try {
-
-            const response = await fetch(`/api/users/${user._id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            const data = await response.json()
-            setSongs(data.songs)
-            setUser(data)
-        }
-        catch (error) {
-            console.error(error)
-        }
-
-    }
 
 
     const deleteSong = async (id) => {
@@ -42,9 +23,7 @@ export default function Index({ user, setUser }) {
             console.error(error)
         }
     }
-    useEffect(() => {
-        getUser()
-    }, [])
+
     return (<>
         <Container className="mt-5  mb-5">
 
@@ -95,7 +74,7 @@ export default function Index({ user, setUser }) {
                                                 <td>
                                                     <div className="flex horizontal icons justify-content-center" >
 
-                                                        <FontAwesomeIcon icon={faTrashCan} className="icon" />
+                                                        <FontAwesomeIcon icon={faTrashCan} onClick={() => { deleteSong(song._id) }} className="icon" />
                                                         {
                                                             !song.spotify ?
                                                                 <FontAwesomeIcon icon={faFileEdit} className="icon" />
