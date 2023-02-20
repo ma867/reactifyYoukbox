@@ -1,0 +1,132 @@
+$primary-accent-color: #eba9e7;
+$secondary-accent-color: #7686df;
+$background-color: #ffffff;
+
+.line {
+    border: none;
+    border-bottom: 1px solid #575a7b;
+    padding: 5px 10px;
+    outline: none;
+    width: 100%;
+}
+
+
+.service-card {
+    a:hover {
+        color: #ffffff;
+    }
+
+}
+
+.sec-icon {
+    position: relative;
+    display: inline-block;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.sec-icon::before {
+    content: "";
+    position: absolute;
+    height: 1px;
+    left: -70px;
+    margin-top: -5.5px;
+    top: 60%;
+    // background: #333333;
+    width: 50px;
+}
+
+.sec-icon::after {
+    content: "";
+    position: absolute;
+    height: 1px;
+    right: -70px;
+    margin-top: -5.5px;
+    top: 60%;
+
+    width: 50px;
+}
+
+
+.informational-cards {
+    h3 {
+        font-size: 20px;
+        margin: 1em 0;
+        z-index: 3;
+    }
+
+    p {
+        font-size: 15px;
+        line-height: 1.6;
+        letter-spacing: 0.03em;
+        z-index: 3;
+    }
+
+    .col {
+        padding: 0 1em 1em 1em;
+        text-align: center;
+    }
+
+    .service-card {
+        width: 100%;
+        height: 100%;
+        padding: 2em 1.5em;
+        border-radius: 5px;
+        box-shadow: 0 0 35px rgba(0, 0, 0, 0.12);
+        transition: 0.5s;
+        position: relative;
+        z-index: 2;
+        overflow: hidden;
+        background: #fff;
+
+    }
+
+    .service-card::after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        background: linear-gradient($primary-accent-color, $secondary-accent-color);
+        position: absolute;
+        left: 0%;
+        top: -98%;
+        z-index: -2;
+        transition: all 0.4s cubic-bezier(0.77, -0.04, 0, 0.99);
+    }
+
+
+    .icon-wrapper {
+        position: relative;
+        margin: auto;
+        font-size: 30px;
+        height: 2.5em;
+        width: 2.5em;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        transition: 0.5s;
+        z-index: 3;
+        background-color: #ffffff;
+        color: $secondary-accent-color
+    }
+
+
+    .service-card:hover:after {
+        top: 0%;
+    }
+
+    .service-card:hover {
+        .icon-wrapper {
+            color: $primary-accent-color;
+        }
+
+        a,
+        h3,
+        h4,
+        p {
+            color: #ffffff;
+        }
+
+    }
+
+
+}

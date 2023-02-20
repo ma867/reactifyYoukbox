@@ -1,0 +1,19 @@
+$primary-dark-color: #1f194c;
+$secondary-dark-color: #575a7b;
+
+$secondary-light-color: #ffffff;
+
+.submit-form {
+    color: $secondary-light-color;
+    padding: 0.3rem;
+    font-size: 14px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    font-weight: 400;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    background-color: $primary-dark-color;
+
+
+}
