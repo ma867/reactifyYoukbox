@@ -15,7 +15,7 @@ const dataController = {
                 next()
 
             }
-        })
+        }).populate("songs")
     },
 
     delete(req, res, next) {
@@ -45,11 +45,11 @@ const dataController = {
     },
 
     async create(req, res, next) {
-        try{
+        try {
             const user = await User.findById(req.params.userId);
             req.body.userId = req.params.userId
             req.body.artwork === '' ? req.body.artwork = "https://i.imgur.com/0FUT9eJ.png" : req.body.artwork = req.body.artwork
-        
+
             Playlist.create(req.body, (err, createdPlaylist) => {
                 if (err) {
                     console.error(err)
@@ -61,13 +61,13 @@ const dataController = {
                     res.locals.data.playlist = createdPlaylist
                     next()
                 }
-            })
+            }).populate("songs")
         }
-        catch{
+        catch {
             res.status(400).json("request didn't go through")
 
         }
-      
+
     },
 
     show(req, res, next) {
@@ -88,15 +88,15 @@ const dataController = {
 
 const apiController = {
     index(req, res, next) {
-      res.json(res.locals.data.playlists);
+        res.json(res.locals.data.playlists);
     },
     show(req, res, next) {
-      res.json(res.locals.data.playlist);
+        res.json(res.locals.data.playlist);
     },
-  };
-  
+};
+
 
 module.exports = {
     apiController,
     dataController,
-  };
+};

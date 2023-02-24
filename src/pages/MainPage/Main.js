@@ -9,52 +9,33 @@ import { useState, useEffect } from "react"
 import { Table, Container, Button, Modal, Form } from "react-bootstrap"
 import { faTrashCan, faFileEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { UploadButton } from 'react-uploader';
-import { Uploader } from 'uploader'
-import { upload } from "@testing-library/user-event/dist/upload"
 
 
 
 
-export default function MainPage({ user, setUser }) {
+
+export default function MainPage({ setPlaylistSongs, playlistSongs, user, setUser, showModal, setShowModal, showUpdate, setShowUpdate, setShowUpload, showUpload, setShowNewPlaylist, showNewPlaylist, songs,
+  setSongs,
+  artwork,
+  setArtwork,
+  formData,
+  setFormData,
+  getRefreshedUser,
+  handleChange,
+  handleSubmit,
+  uploader,
+  options,
+  playlistArtwork,
+  setPlaylistArtwork,
+  playlistFormData,
+  setPlaylistFormData,
+  handlePlaylistChange,
+  handlePlaylistSubmit }) {
 
 
-  const [songs, setSongs] = useState([])
-  const [showModal, setShowModal] = useState(false);
-  const [showUpload, setShowUpload] = useState(false);
-  const [showUpdate, setShowUpdate] = useState(false);
-  const [artwork, setArtwork] = useState('https://i.imgur.com/0FUT9eJ.png')
   const [updatedArtwork, setUpdatedArtwork] = useState('')
-  const [formData, setFormData] = useState({
-    title: '',
-    artist: '',
-    album: '',
-    audio: '',
-    userId: user._id
-
-  })
-
   const [song, setSong] = useState(null)
 
-  const getUser = async () => {
-
-    try {
-
-      const response = await fetch(`/api/users/${user._id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      const data = await response.json()
-      setSongs(data.songs)
-      setUser(data)
-    }
-    catch (error) {
-      console.error(error)
-    }
-
-  }
 
   const updateSong = async (id, updatedData) => {
     try {
@@ -79,76 +60,33 @@ export default function MainPage({ user, setUser }) {
           'Content-Type': 'application/json'
         }
       })
-      getUser()
+      getRefreshedUser()
     } catch (error) {
       console.error(error)
     }
   }
 
-  const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value })
 
-  }
 
   const handleChangeUpdate = (evt) => {
     setSong({ ...song, [evt.target.name]: evt.target.value })
 
   }
-  const handleSubmit = async (evt) => {
-    evt.preventDefault()
-    try {
-      const formDataCopy = { ...formData, artwork }
 
-      const response = await fetch(`/api/songs/${user._id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ ...formDataCopy })
-      })
-      setFormData({
-        title: '',
-        artist: '',
-        album: '',
-        audio: '',
-        userId: user._id
-
-      })
-      setShowModal(false)
-      getUser()
-    }
-    catch (error) {
-      console.error(error)
-    }
-
-  }
-
-  const uploader = Uploader({
-    apiKey: 'free'
-  })
-
-  const options = {
-    multi: false,
-    maxFileCount: 1,
-    editor: {
-      images: {
-        crop: true,
-        cropShape: 'circ',
-        cropRatio: 1 / 1
-      }
-    }
-  }
 
   useEffect(() => {
-    getUser()
-  }, [user])
+    getRefreshedUser()
+  }, [])
 
   return (
     <>
 
 
-      <NavBar user={user} setUser={setUser} setShowModal={setShowModal} setShowUpload={setShowUpload} setShowUpdate={setShowUpdate} />
-      <TitleBanner bannerTitleLight="Song" bannerTitleSolid="Library" user={user} setUser={setUser} getUser={getUser} />
+      <NavBar page="" user={user} setUser={setUser} setShowModal={setShowModal} setShowUpload={setShowUpload} setShowUpdate={setShowUpdate} setShowNewPlaylist={setShowNewPlaylist} showNewPlaylist={showNewPlaylist} />
+      <TitleBanner bannerTitleLight="Song" bannerTitleSolid="Library" user={user} setUser={setUser} getRefreshedUser={getRefreshedUser}
+        page="main"
+        cover="https://i.imgur.com/g0ar3Jv.png"
+        description="" />
 
       {showModal ?
 
@@ -162,27 +100,6 @@ export default function MainPage({ user, setUser }) {
           <UploadModal showModal={showModal} setShowModal={setShowModal} handleSubmit={handleSubmit} handleChange={handleChange} formData={formData} setShowUpload={setShowUpload} setArtwork={setArtwork} uploader={uploader} options={options} />
 
         : ""}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -208,18 +125,15 @@ export default function MainPage({ user, setUser }) {
                   {
                     songs.map((song, idx) => {
                       return (
-
                         <tr>
                           <td>{idx + 1}</td>
                           <td>
-
                             <div className="album-wrapper">
                               <img className="rounded-0" src={song.artwork} width="100px" height="100px" />
                               <div className="audio-wrapper">
                                 <audio src={song.audio} controls></audio>
                               </div>
                             </div>
-
                           </td>
                           <td>
                             <div className="flex vertical text-left">
@@ -233,7 +147,7 @@ export default function MainPage({ user, setUser }) {
                           <td>{song.album}</td>
                           <td>{song.createdAt.slice(0, 10)}</td>
                           <td>
-                            <div className="flex horizontal icons justify-content-center" >
+                            <div className="flex horizontal space-between" >
 
                               <FontAwesomeIcon icon={faTrashCan} onClick={() => { deleteSong(song._id) }} className="icon" />
                               {

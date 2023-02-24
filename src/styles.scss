@@ -156,10 +156,38 @@ audio {
 
 }
 
-.icons {
+.space-between {
   justify-content: space-between;
 
-  :hover {
-    color: $transition-color-two;
-  }
+
+}
+
+.align-items-baseline {
+  align-items: baseline;
+}
+
+.icon-gap {
+  gap: 10px;
+}
+
+.icon:hover {
+  color: $transition-color-two;
+}
+
+.profile-icon {
+  background-size: cover;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+
+.library-icon {
+  min-width: 125px;
+  min-height: 125px;
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.full-width {
+  width: 100vw;
 }

@@ -13,7 +13,7 @@ const dataController = {
     try {
       const user = await User.create(req.body);
       const createdUser = await User.findById(user._id).populate("songs").populate("playlists").exec();
-  
+
       const token = createJWT(createdUser);
 
       res.locals.data.user = createdUser;

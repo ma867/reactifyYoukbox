@@ -1,8 +1,12 @@
-import { Container, Navbar, Nav, NavDropdown, Form, Button } from 'react-bootstrap'
+import { Container, Navbar, Nav, NavDropdown, Row, Col, Form, Button } from 'react-bootstrap'
 import { logOut } from '../../utilities/users-service'
 import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-export default function NavBar({ user, setAuth, auth, setShowModal, setShowUpload, setShowUpdate }) {
+import "./Navbar.scss"
+export default function NavBar({ page, user, setAuth, auth, setShowModal, setShowUpload, setShowUpdate, setShowNewPlaylist,
+
+
+    bannerTitleLight, bannerTitleSolid, setUser, cover, description }) {
     const navbarRef = useRef(null)
     const navigate = useNavigate()
     const [songTitle, setSongTitle] = useState('')
@@ -34,7 +38,7 @@ export default function NavBar({ user, setAuth, auth, setShowModal, setShowUploa
     }, [])
     return (
 
-        <Navbar ref={navbarRef} collapseOnSelect bg="dark" variant="dark" expand="lg" fixed="top">
+        <Navbar ref={navbarRef} className='nav-image' collapseOnSelect expand="lg" style={{ fixed: "top" }} >
             <Container>
                 <Navbar.Brand href="#home">
                     <img width="200" src="https://i.imgur.com/gGmlYWA.png" alt="youkbox" />
@@ -60,8 +64,11 @@ export default function NavBar({ user, setAuth, auth, setShowModal, setShowUploa
                                     <Nav.Link href="" onClick={() => { setShowModal(true); setShowUpload(true); setShowUpdate(false) }}>Upload</Nav.Link>
                                     <Nav.Link href="/">Songs</Nav.Link>
                                     <Nav.Link href="/playlists">Playlists</Nav.Link>
-                                    <Nav.Link href="" onClick={() => { logOut() }}>Log Out</Nav.Link>
-
+                                    {
+                                        page === "playlist" ?
+                                            <Nav.Link href="" onClick={() => { setShowModal(true); setShowNewPlaylist(true); setShowUpload(false); setShowUpdate(false) }}>New Playlist</Nav.Link>
+                                            : ""
+                                    }
                                     <Form className="d-flex" onSubmit={handleSubmit}>
                                         <Form.Control
                                             type="text"
@@ -72,15 +79,26 @@ export default function NavBar({ user, setAuth, auth, setShowModal, setShowUploa
 
                                         />
                                         <Button type="submit" variant="outline-success">Search</Button>
+
                                     </Form>
+                                    <Nav.Link href="" onClick={() => { logOut() }}>Log Out</Nav.Link>
+
+
                                 </>
 
                         }
 
                     </Nav>
                 </Navbar.Collapse>
+
+
+
+
             </Container>
+
         </Navbar>
+
+
 
     )
 }

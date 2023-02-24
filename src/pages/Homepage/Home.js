@@ -11,7 +11,7 @@ export default function Homepage({ user, setUser }) {
   return (
     <>
 
-      <Navbar user={user} setAuth={setAuth} auth={auth} />
+      <Navbar page="" user={user} setAuth={setAuth} auth={auth} />
       {
         auth ?
 

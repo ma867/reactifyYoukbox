@@ -97,15 +97,13 @@ export default function SearchPage({ user, setUser }) {
     }, [song])
     return (
         <>
-            <NavBar user={user} setUser={setUser} />
+            <NavBar page="" user={user} setUser={setUser} />
             <TitleBanner bannerTitleLight="Search" bannerTitleSolid="Track" user={user} setUser={setUser} />
 
             <Container className="mb-3 mt-3 ">
                 <Row className="justify-content-md-center">
                     {
                         foundSongs && foundSongsAudio ?
-
-
 
                             foundSongs.map((foundSong, idx) => {
 
