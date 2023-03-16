@@ -17,6 +17,7 @@ function App() {
   const [showModal, setShowModal] = useState(false)
   const [showUpload, setShowUpload] = useState(false)
   const [showUpdate, setShowUpdate] = useState(false)
+  const [showSearch, setShowSearch] = useState(false)
   const [showNewPlaylist, setShowNewPlaylist] = useState(false)
   const [showUpdatePlaylist, setShowUpdatePlaylist] = useState(false)
   const [songs, setSongs] = useState([])
@@ -139,6 +140,8 @@ function App() {
                 path='/'
                 element={
                   <MainPage
+                    showSearch={showSearch}
+                    setShowSearch={setShowSearch}
                     showUpdatePlaylist={showUpdatePlaylist}
                     setShowUpdatePlaylist={setShowUpdatePlaylist}
                     handlePlaylistChange={handlePlaylistChange}
@@ -254,6 +257,8 @@ function App() {
                 path='/playlist/:id'
                 element={
                   <PlaylistPage
+                    showSearch={showSearch}
+                    setShowSearch={setShowSearch}
                     showUpdatePlaylist={showUpdatePlaylist}
                     setShowUpdatePlaylist={setShowUpdatePlaylist}
                     handlePlaylistChange={handlePlaylistChange}

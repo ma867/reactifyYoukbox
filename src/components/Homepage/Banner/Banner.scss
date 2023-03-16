@@ -60,11 +60,15 @@ $primary-background-color: #1f194c;
 
 .mix-blend-mode {
   mix-blend-mode: multiply;
-  background-size: cover;
+
+}
+
+
+.banner-icon {
   width: 600px;
   height: 600px;
   position: absolute;
-
+  background-size: cover;
 }
 
 .main-banner-title {

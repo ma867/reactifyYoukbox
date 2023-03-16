@@ -3,14 +3,17 @@ import NewPlaylistModal from '../../components/ModalForm/NewPlaylistModal'
 import NavBar from '../../components/Navbar/Navbar'
 import Footer from '../../components/Footer/Footer'
 import UpdatePlaylistModal from '../../components/ModalForm/UpdatePlaylistModal'
-
-import { useParams } from 'react-router-dom'
+import NotFoundBanner from '../../components/NotFoundBanner/NotFoundBanner'
+import Search from '../../components/Search/Search'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Table, Container, Button, Modal, Form, Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap'
 import { faTrashCan, faFileEdit, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function PlaylistPage({
+    showSearch,
+    setShowSearch,
     showUpdatePlaylist,
     setShowUpdatePlaylist,
     user,
@@ -34,6 +37,7 @@ export default function PlaylistPage({
     setPlaylistSongs,
 }) {
     const params = useParams()
+    const navigate = useNavigate()
     const [playlist, setPlaylist] = useState([])
     const [updatedArtwork, setUpdatedArtwork] = useState(playlist?.artwork)
 
@@ -51,6 +55,19 @@ export default function PlaylistPage({
             const data = await response.json()
             setPlaylist(data)
             setSongs(data.songs)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    const deletePlaylist = async (id) => {
+        try {
+            await fetch(`/api/playlists/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            navigate('/playlists')
         } catch (error) {
             console.error(error)
         }
@@ -123,8 +140,14 @@ export default function PlaylistPage({
                 page='playlist'
                 cover={playlist?.artwork}
                 description={playlist?.description}
+                setShowModal={setShowModal}
+                setShowUpdatePlaylist={setShowUpdatePlaylist}
+                deletePlaylist={deletePlaylist}
+                playlistId={playlistId}
+
+
             />
-            <Button onClick={() => { setShowModal(true); setShowUpdatePlaylist(true) }}>Edit</Button>
+            {/* <Button onClick={() => { setShowModal(true); setShowUpdatePlaylist(true) }}>Edit</Button> */}
             {showModal
                 ? (
                     showNewPlaylist
@@ -144,114 +167,106 @@ export default function PlaylistPage({
                     ''
                 )}
 
-            <Container className='mt-5  mb-5 overflow-auto' style={{ width: '100%', height: '500px' }}>
-                <Table responsive='xl'>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>ARTWORK</th>
-                            <th>TITLE</th>
-                            <th>ALBUM</th>
-                            <th>DATE ADDED</th>
-                            <th />
-                        </tr>
-                    </thead>
-                    <tbody>
 
-                        {
-                            songs
 
-                                ? <>
-                                    {
-                                        songs.map((song, idx) => {
-                                            return (
+            {
+                songs && songs.length > 0 ?
+                    <Container className='mt-5  mb-5 overflow-auto' style={{ width: '100%', height: '500px' }}>
+                        <Table responsive='xl'>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>ARTWORK</th>
+                                    <th>TITLE</th>
+                                    <th>ALBUM</th>
+                                    <th>DATE ADDED</th>
+                                    <th />
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                                                <tr>
-                                                    <td>{idx + 1}</td>
-                                                    <td>
 
-                                                        <div className='album-wrapper'>
-                                                            <img className='rounded-0' src={song.artwork} width='70px' height='70px' />
-                                                            <div className='audio-wrapper'>
-                                                                <audio src={song.audio} controls />
-                                                            </div>
+                                {
+                                    songs.map((song, idx) => {
+                                        return (
+
+                                            <tr>
+                                                <td>{idx + 1}</td>
+                                                <td>
+
+                                                    <div className='album-wrapper'>
+                                                        <img className='rounded-0' src={song.artwork} width='70px' height='70px' />
+                                                        <div className='audio-wrapper'>
+                                                            <audio src={song.audio} controls />
                                                         </div>
+                                                    </div>
 
-                                                    </td>
-                                                    <td>
-                                                        <div className='flex vertical text-left'>
-                                                            <h5 className='main-song-title'>{song.title}</h5>
-                                                            <h6 className='main-artist-title'>{song.artist.join(' • ')}</h6>
-                                                        </div>
+                                                </td>
+                                                <td>
+                                                    <div className='flex vertical text-left'>
+                                                        <h5 className='main-song-title'>{song.title}</h5>
+                                                        <h6 className='main-artist-title'>{song.artist.join(' • ')}</h6>
+                                                    </div>
 
-                                                    </td>
-                                                    <td className='main-album-title'>{song.album}</td>
-                                                    <td className='main-date-title'>{song.createdAt.slice(0, 10)}</td>
-                                                    <td>
-
-
-                                                        <Dropdown>
-                                                            <Dropdown.Toggle id="dropdown-basic">
-                                                                <FontAwesomeIcon icon={faEllipsisVertical} className='icon' />
-                                                            </Dropdown.Toggle>
-
-                                                            <Dropdown.Menu>
-                                                                <Dropdown.Item href="" onClick={() => { updatePlaylistSongs(playlist?._id, song._id) }} ><FontAwesomeIcon
-                                                                    icon={faTrashCan}
-
-                                                                    className='icon'
-                                                                />&nbsp;
-                                                                    Remove from playlist</Dropdown.Item>
-                                                                {!song.spotify
-                                                                    ? (
-                                                                        <Dropdown.Item href="" onClick={() => { updatePlaylistSongs(playlist?._id, song._id) }} >
-                                                                            <FontAwesomeIcon
-                                                                                icon={faFileEdit}
-
-                                                                                className='icon'
-                                                                            />&nbsp;
-
-                                                                            Edit Song</Dropdown.Item>
-                                                                    )
-                                                                    : (
-                                                                        ''
-                                                                    )}
-
-                                                            </Dropdown.Menu>
-                                                        </Dropdown>
+                                                </td>
+                                                <td className='main-album-title'>{song.album}</td>
+                                                <td className='main-date-title'>{song.createdAt.slice(0, 10)}</td>
+                                                <td>
 
 
-
-
-
-
-
-
-
-                                                        {/* <div className='flex horizontal space-between'>
+                                                    <Dropdown>
+                                                        <Dropdown.Toggle id="dropdown-basic">
                                                             <FontAwesomeIcon icon={faEllipsisVertical} className='icon' />
+                                                        </Dropdown.Toggle>
 
-                                                            <FontAwesomeIcon icon={faTrashCan} onClick={() => { updatePlaylistSongs(playlist?._id, song._id) }} className='icon' />
-                                                            {
-                                                                !song.spotify
-                                                                    ? <FontAwesomeIcon icon={faFileEdit} onClick={() => { updatePlaylistSongs(playlist?._id, song._id) }} className='icon' />
-                                                                    : ''
+                                                        <Dropdown.Menu>
+                                                            <Dropdown.Item href="" onClick={() => { updatePlaylistSongs(playlist?._id, song._id) }} ><FontAwesomeIcon
+                                                                icon={faTrashCan}
 
-                                                            }
-                                                        </div> */}
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                </>
-                                : 'no songs'
+                                                                className='icon'
+                                                            />&nbsp;
+                                                                Remove from playlist</Dropdown.Item>
+                                                            {!song.spotify
+                                                                ? (
+                                                                    <Dropdown.Item href="" onClick={() => { updatePlaylistSongs(playlist?._id, song._id) }} >
+                                                                        <FontAwesomeIcon
+                                                                            icon={faFileEdit}
 
-                        }
+                                                                            className='icon'
+                                                                        />&nbsp;
 
-                    </tbody>
-                </Table>
-            </Container>
+                                                                        Edit Song</Dropdown.Item>
+                                                                )
+                                                                : (
+                                                                    ''
+                                                                )}
+
+                                                        </Dropdown.Menu>
+                                                    </Dropdown>
+
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+
+
+                            </tbody>
+                        </Table>
+                    </Container>
+
+                    :
+
+                    <NotFoundBanner message="This is an empty playlists. Add songs below or use the search bar to find your favorites tunes." buttonMessage="Add Songs" buttonAction={setShowSearch(true)} />
+            }
+
+            {
+                showSearch ?
+                    <Search setShowSearch={setShowSearch} /> :
+                    ""
+            }
+
+
 
             <Footer />
         </>

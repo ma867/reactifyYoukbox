@@ -126,99 +126,105 @@ export default function MainPage({
         : (
           ''
         )}
+      {
+        songs && songs.length > 0 ?
 
-      <Container className='mt-5  mb-5 overflow-auto' style={{ width: '100%', height: '500px' }}>
-        <Table responsive='xl'>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>ARTWORK</th>
-              <th>TITLE</th>
-              <th>ALBUM</th>
-              <th>DATE ADDED</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {songs
-              ? (
-                <>
-                  {songs.map((song, idx) => {
-                    return (
-                      <tr>
-                        <td>{idx + 1}</td>
-                        <td>
-                          <div className='album-wrapper'>
-                            <img
-                              className='rounded-0'
-                              src={song.artwork}
-                              width='70px'
-                              height='70px'
-                            />
-                            <div className='audio-wrapper'>
-                              <audio src={song.audio} controls />
-                            </div>
+          <Container className='mt-5  mb-5 overflow-auto' style={{ width: '100%', height: '500px' }}>
+            <Table responsive='xl'>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>ARTWORK</th>
+                  <th>TITLE</th>
+                  <th>ALBUM</th>
+                  <th>DATE ADDED</th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+
+
+                {songs.map((song, idx) => {
+                  return (
+                    <tr>
+                      <td>{idx + 1}</td>
+                      <td>
+                        <div className='album-wrapper'>
+                          <img
+                            className='rounded-0'
+                            src={song.artwork}
+                            width='70px'
+                            height='70px'
+                          />
+                          <div className='audio-wrapper'>
+                            <audio src={song.audio} controls />
                           </div>
-                        </td>
-                        <td className="song-title">
-                          <div className='flex vertical text-left'>
-                            <h5 className='main-song-title'>{song.title}</h5>
-                            <h6 className='main-artist-title'>{song.artist.join(' • ')}</h6>
-                          </div>
-                        </td>
-                        <td className='main-album-title'>{song.album}</td>
-                        <td className='main-date-title'>{song.createdAt.slice(0, 10)}</td>
-                        <td>
+                        </div>
+                      </td>
+                      <td className="song-title">
+                        <div className='flex vertical text-left'>
+                          <h5 className='main-song-title'>{song.title}</h5>
+                          <h6 className='main-artist-title'>{song.artist.join(' • ')}</h6>
+                        </div>
+                      </td>
+                      <td className='main-album-title'>{song.album}</td>
+                      <td className='main-date-title'>{song.createdAt.slice(0, 10)}</td>
+                      <td>
 
 
-                          <Dropdown>
-                            <Dropdown.Toggle id="dropdown-basic">
-                              <FontAwesomeIcon icon={faEllipsisVertical} className='icon' />
-                            </Dropdown.Toggle>
+                        <Dropdown>
+                          <Dropdown.Toggle id="dropdown-basic">
+                            <FontAwesomeIcon icon={faEllipsisVertical} className='icon' />
+                          </Dropdown.Toggle>
 
-                            <Dropdown.Menu>
-                              <Dropdown.Item href="" onClick={() => {
-                                deleteSong(song._id)
-                              }}><FontAwesomeIcon
-                                  icon={faTrashCan}
+                          <Dropdown.Menu>
+                            <Dropdown.Item href="" onClick={() => {
+                              deleteSong(song._id)
+                            }}><FontAwesomeIcon
+                                icon={faTrashCan}
 
-                                  className='icon'
-                                />&nbsp;
-                                Remove from Library</Dropdown.Item>
-                              {!song.spotify
-                                ? (
-                                  <Dropdown.Item href="" onClick={() => {
-                                    setShowModal(true)
-                                    setShowUpdate(true)
-                                    setSong(song)
-                                    setUpdatedArtwork(song.artwork)
-                                  }}>
-                                    <FontAwesomeIcon
-                                      icon={faFileEdit}
+                                className='icon'
+                              />&nbsp;
+                              Remove from Library</Dropdown.Item>
+                            {!song.spotify
+                              ? (
+                                <Dropdown.Item href="" onClick={() => {
+                                  setShowModal(true)
+                                  setShowUpdate(true)
+                                  setSong(song)
+                                  setUpdatedArtwork(song.artwork)
+                                }}>
+                                  <FontAwesomeIcon
+                                    icon={faFileEdit}
 
-                                      className='icon'
-                                    />&nbsp;
+                                    className='icon'
+                                  />&nbsp;
 
-                                    Edit Song</Dropdown.Item>
-                                )
-                                : (
-                                  ''
-                                )}
+                                  Edit Song</Dropdown.Item>
+                              )
+                              : (
+                                ''
+                              )}
 
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </>
-              )
-              : (
-                'no songs'
-              )}
-          </tbody>
-        </Table>
-      </Container>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </td>
+                    </tr>
+                  )
+                })}
+
+
+
+
+              </tbody>
+            </Table>
+          </Container>
+
+          :
+
+          "NO SONGS TO LOAD HERE ADD SOME"
+      }
+
 
       {/* <Index user={user} setUser={setUser} songs={songs} setSongs={setSongs} /> */}
       <Footer />

@@ -1,9 +1,12 @@
 
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-
+import { faTrashCan, faFileEdit, faEllipsis } from '@fortawesome/free-solid-svg-icons'
+import { Table, Container, Button, Modal, Form, Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './TitleBanner.scss'
-export default function TitleBanner({ playlistLength, bannerTitleLight, bannerTitleSolid, user, page, cover, description }) {
+export default function TitleBanner({ playlistLength, bannerTitleLight, bannerTitleSolid, user, page, cover, description, setShowModal,
+    setShowUpdatePlaylist, deletePlaylist, playlistId }) {
     return (
         <>
 
@@ -21,6 +24,30 @@ export default function TitleBanner({ playlistLength, bannerTitleLight, bannerTi
                                             ? <div className='flex horizontal icon-gap align-content-center text-white'>
                                                 <div className='profile-icon' style={{ backgroundImage: `url(${user?.image})` }} />
                                                 <p><small>{user?.name}   •   {playlistLength} songs</small></p>
+                                                <Dropdown>
+                                                    <Dropdown.Toggle id="dropdown-basic">
+                                                        <FontAwesomeIcon icon={faEllipsis} className='icon light m-0' />
+                                                    </Dropdown.Toggle>
+
+                                                    <Dropdown.Menu>
+                                                        <Dropdown.Item href="" onClick={() => deletePlaylist(playlistId)} ><FontAwesomeIcon
+                                                            icon={faTrashCan}
+
+                                                            className='icon'
+                                                        />&nbsp;
+                                                            Delete Playlist</Dropdown.Item>
+                                                        <Dropdown.Item href="" onClick={() => { setShowModal(true); setShowUpdatePlaylist(true) }}>
+                                                            <FontAwesomeIcon
+                                                                icon={faFileEdit}
+
+                                                                className='icon'
+                                                            />&nbsp;
+
+                                                            Edit Playlist</Dropdown.Item>
+
+
+                                                    </Dropdown.Menu>
+                                                </Dropdown>
                                             </div>
 
                                             : ''

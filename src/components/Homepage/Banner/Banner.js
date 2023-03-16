@@ -4,7 +4,7 @@ export default function Banner({ setAuth, auth }) {
   return (
 
     <div className='banner-image full-width full-height flex justify-content-center align-items-center pt-5'>
-      <div className="mix-blend-mode p-3" style={{ backgroundImage: 'url("https://i.imgur.com/E1d7RkY.png")' }} >
+      <div className="mix-blend-mode banner-icon p-3" style={{ backgroundImage: 'url("https://i.imgur.com/E1d7RkY.png")' }} >
         {/* <img style={{ width: '600px', height: '600px' }} class="mix-blend-mode" src="https://i.imgur.com/E1d7RkY.png" /> */}
       </div>
       <div className='section-header text-center title p-3'>

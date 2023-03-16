@@ -1,0 +1,55 @@
+$primary-background-color: #1f194c;
+
+.not-found-banner {
+
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    background-size: cover;
+    border: 1px solid black;
+}
+
+.mix-blend-mode {
+    mix-blend-mode: multiply;
+
+
+
+}
+
+
+.not-found-banner-icon-container {
+    width: 500px;
+    height: 500px;
+
+}
+
+.not-found-banner-text-container {
+    width: 500px;
+    height: 500px;
+
+}
+
+.not-found-banner-button {
+    cursor: pointer;
+    background-color: $primary-background-color;
+    border-color: $primary-background-color;
+    color: white;
+    padding: 10px;
+    transition: .2s;
+}
+
+.not-found-banner-button:hover {
+    background-color: white;
+    border-color: white;
+    color: $primary-background-color;
+    transform: translateY(2px);
+    box-shadow: 0 0 20px rgba($primary-background-color, 80%);
+
+
+}
+
+
+.not-found-banner-button:active {
+    background-color: white;
+    border-color: white;
+}
