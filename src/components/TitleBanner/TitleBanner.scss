@@ -2,6 +2,8 @@ $primary-dark-color: #1f194c;
 $secondary-dark-color: #575a7b;
 
 $secondary-light-color: #ffffff;
+$title-banner-light: #f1b7d0;
+$title-banner-dark: #dea9e9;
 
 .submit-form {
     color: $secondary-light-color;
@@ -15,5 +17,10 @@ $secondary-light-color: #ffffff;
     cursor: pointer;
     background-color: $primary-dark-color;
 
+
+}
+
+.title-banner {
+    background-image: linear-gradient(to right, $title-banner-light, $title-banner-dark);
 
 }

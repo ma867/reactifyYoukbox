@@ -1,27 +1,23 @@
 import { Container, Col, Row } from 'react-bootstrap'
 import { useEffect, useRef } from 'react'
-export default function SideNavbar(props) {
-    const navbarRef = useRef(null)
+export default function SideNavbar (props) {
+  const navbarRef = useRef(null)
 
-    const changeNavbarColorOnScroll = () => {
-        window.addEventListener('scroll', function () {
+  const changeNavbarColorOnScroll = () => {
+    window.addEventListener('scroll', function () {
+      if (window.pageYOffset > 100) {
+        navbarRef.current.classList.add('bg-dark', 'shadow')
+      } else {
+        navbarRef.current.classList.remove('bg-dark', 'shadow')
+      }
+    })
+  }
 
-            if (window.pageYOffset > 100) {
-                navbarRef.current.classList.add('bg-dark', 'shadow');
-            } else {
-                navbarRef.current.classList.remove('bg-dark', 'shadow');
-            }
-        })
+  return (
+    <>
+      {/* <SideNavbar /> */}
 
-
-    }
-
-
-    return (
-        <>
-            {/* <SideNavbar /> */}
-
-            {/* <Container fluid>
+      {/* <Container fluid>
         <Row>
           <Col lg={3} className="full-height bg-dark text-light flex align-items-center"  >
             <Container style={{ backgroundColor: "red" }} className=" flex justify-content-center" >
@@ -45,11 +41,7 @@ export default function SideNavbar(props) {
           </Col>
         </Row>
 
-
-
-
-
       </Container> */}
-        </>
-    )
+    </>
+  )
 }

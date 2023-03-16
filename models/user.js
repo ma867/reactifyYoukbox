@@ -20,10 +20,11 @@ const userSchema = new Schema({
   },
   songs: [{ type: Schema.Types.ObjectId, ref: 'Song' }],
   playlists: [{ type: Schema.Types.ObjectId, ref: 'Playlist' }],
+  image: { type: String }
 }, {
   timestamps: true,
   toJSON: {
-    transform (doc, ret) {
+    transform(doc, ret) {
       delete ret.password
       return ret
     }

@@ -7,30 +7,14 @@ $transition-color-six: #f2b8cd;
 $transition-color-seven: #f5b7ae;
 $transition-color-eight: #f4caaa;
 $transition-color-nine: #f5d59d;
+$navbar-primary-light: #f1b7d0;
 
-@keyframes animate {
-    0% {
-        background-position: 0 50%;
-    }
+$navbar-primary-dark: #dea9e9;
 
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0 50%;
-    }
-}
 
 .nav-image {
-
-    background: linear-gradient(-45deg,
-            $transition-color-one 0%, $transition-color-two 13%, $transition-color-three 25%,
-            $transition-color-four 38%, $transition-color-five 50%, $transition-color-six 62%,
-            $transition-color-seven 75%, $transition-color-eight 87%, $transition-color-nine 100%);
-    background-size: 500% 500%;
+    background-image: linear-gradient(to right, $navbar-primary-light, $navbar-primary-dark);
     position: fixed;
-    animation: animate 10s ease-in-out infinite;
     width: 100vw;
     z-index: 2;
 

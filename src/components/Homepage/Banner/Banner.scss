@@ -7,6 +7,7 @@ $transition-color-six: #f2b8cd;
 $transition-color-seven: #f5b7ae;
 $transition-color-eight: #f4caaa;
 $transition-color-nine: #f5d59d;
+$primary-background-color: #1f194c;
 
 @keyframes animate {
   0% {
@@ -31,4 +32,43 @@ $transition-color-nine: #f5d59d;
   background-size: 500% 500%;
   position: relative;
   animation: animate 10s ease-in-out infinite;
+}
+
+.banner-button {
+  cursor: pointer;
+  background-color: white;
+  border-color: white;
+  color: $primary-background-color;
+  padding: 10px;
+  box-shadow: 0 0 20px rgba($primary-background-color, 80%);
+  transition: .2s;
+}
+
+.banner-button:hover {
+  background-color: white;
+  border-color: white;
+  color: $primary-background-color;
+  transform: translateY(2px);
+
+}
+
+
+.banner-button:active {
+  background-color: white;
+  border-color: white;
+}
+
+.mix-blend-mode {
+  mix-blend-mode: multiply;
+  background-size: cover;
+  width: 600px;
+  height: 600px;
+  position: absolute;
+
+}
+
+.main-banner-title {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 20px rgba($primary-background-color, 80%);
 }

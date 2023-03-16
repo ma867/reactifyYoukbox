@@ -1,60 +1,45 @@
-import TitleBanner from "../../components/TitleBanner/TitleBanner"
-import NewPlaylistModal from "../../components/ModalForm/NewPlaylistModal"
-import NavBar from "../../components/Navbar/Navbar"
-import Footer from "../../components/Footer/Footer"
-import UpdatePlaylistModal from "../../components/ModalForm/UpdatePlaylistModal"
+import TitleBanner from '../../components/TitleBanner/TitleBanner'
+import NewPlaylistModal from '../../components/ModalForm/NewPlaylistModal'
+import NavBar from '../../components/Navbar/Navbar'
+import Footer from '../../components/Footer/Footer'
+import UpdatePlaylistModal from '../../components/ModalForm/UpdatePlaylistModal'
 
-import { useParams } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { Table, Container, Button, Modal, Form } from "react-bootstrap"
-import { faTrashCan, faFileEdit } from '@fortawesome/free-solid-svg-icons'
+import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Table, Container, Button, Modal, Form, Dropdown, DropdownButton, ButtonGroup } from 'react-bootstrap'
+import { faTrashCan, faFileEdit, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-
-export default function PlaylistPage({ showUpdatePlaylist,
+export default function PlaylistPage({
+    showUpdatePlaylist,
     setShowUpdatePlaylist,
     user,
     getUser,
     setUser,
     showModal,
     setShowModal,
-    showUpdate,
     setShowUpdate,
     setShowUpload,
-    showUpload,
     setShowNewPlaylist,
     showNewPlaylist,
     songs,
     setSongs,
-    artwork,
-    setArtwork,
-    formData,
-    setFormData,
-    getRefreshedUser,
-    handleChange,
-    handleSubmit,
     uploader,
     options,
-    playlistArtwork,
     setPlaylistArtwork,
     playlistFormData,
-    setPlaylistFormData,
     handlePlaylistChange,
     handlePlaylistSubmit,
     playlistSongs,
     setPlaylistSongs,
-    playlists }) {
-
+}) {
     const params = useParams()
     const [playlist, setPlaylist] = useState([])
     const [updatedArtwork, setUpdatedArtwork] = useState(playlist?.artwork)
 
-
     const playlistId = params.id
 
-
     const getPlaylist = async () => {
-
         try {
             const response = await fetch(`/api/playlists/${playlistId}`, {
                 method: 'GET',
@@ -66,12 +51,9 @@ export default function PlaylistPage({ showUpdatePlaylist,
             const data = await response.json()
             setPlaylist(data)
             setSongs(data.songs)
-
-        }
-        catch (error) {
+        } catch (error) {
             console.error(error)
         }
-
     }
 
     const updatePlaylistSongs = async (id, songId) => {
@@ -112,7 +94,6 @@ export default function PlaylistPage({ showUpdatePlaylist,
 
     const handleChangeUpdate = (evt) => {
         setPlaylist({ ...playlist, [evt.target.name]: evt.target.value })
-
     }
 
     useEffect(() => {
@@ -122,7 +103,7 @@ export default function PlaylistPage({ showUpdatePlaylist,
     return (
         <>
             <NavBar
-                page="playlist"
+                page='playlist'
                 user={user}
                 setUser={setUser}
                 setShowModal={setShowModal}
@@ -130,34 +111,41 @@ export default function PlaylistPage({ showUpdatePlaylist,
                 setShowUpdate={setShowUpdate}
                 setShowNewPlaylist={setShowNewPlaylist}
                 showNewPlaylist={showNewPlaylist}
-
             />
 
             <TitleBanner
-                bannerTitleLight=""
+                playlistLength={playlist?.songs?.length}
+                bannerTitleLight=''
                 bannerTitleSolid={playlist?.title}
                 user={user}
                 setUser={setUser}
                 getUser={getUser}
-                page="playlist"
+                page='playlist'
                 cover={playlist?.artwork}
                 description={playlist?.description}
             />
             <Button onClick={() => { setShowModal(true); setShowUpdatePlaylist(true) }}>Edit</Button>
-            {showModal ? (
-                showNewPlaylist ? (
-                    <NewPlaylistModal showUpdatePlaylist={showUpdatePlaylist}
-                        setShowUpdatePlaylist={setShowUpdatePlaylist} setPlaylistSongs={setPlaylistSongs} playlistSongs={playlistSongs} songs={songs} showModal={showModal} setShowModal={setShowModal} handlePlaylistSubmit={handlePlaylistSubmit} handlePlaylistChange={handlePlaylistChange} playlistFormData={playlistFormData} setShowNewPlaylist={setShowNewPlaylist} setPlaylistArtwork={setPlaylistArtwork} uploader={uploader} options={options} />
-                ) : <UpdatePlaylistModal setUpdatedArtwork={setUpdatedArtwork} updatedArtwork={updatedArtwork} handleChangeUpdate={handleChangeUpdate} updatePlaylistInfo={updatePlaylistInfo} playlist={playlist} showUpdatePlaylist={showUpdatePlaylist}
-                    setShowUpdatePlaylist={setShowUpdatePlaylist} setPlaylistSongs={setPlaylistSongs} playlistSongs={playlistSongs} songs={songs} showModal={showModal} setShowModal={setShowModal} handlePlaylistSubmit={handlePlaylistSubmit} handlePlaylistChange={handlePlaylistChange} playlistFormData={playlistFormData} setShowNewPlaylist={setShowNewPlaylist} setPlaylistArtwork={setPlaylistArtwork} uploader={uploader} options={options} />
+            {showModal
+                ? (
+                    showNewPlaylist
+                        ? (
+                            <NewPlaylistModal
+                                showUpdatePlaylist={showUpdatePlaylist}
+                                setShowUpdatePlaylist={setShowUpdatePlaylist} setPlaylistSongs={setPlaylistSongs} playlistSongs={playlistSongs} songs={songs} showModal={showModal} setShowModal={setShowModal} handlePlaylistSubmit={handlePlaylistSubmit} handlePlaylistChange={handlePlaylistChange} playlistFormData={playlistFormData} setShowNewPlaylist={setShowNewPlaylist} setPlaylistArtwork={setPlaylistArtwork} uploader={uploader} options={options}
+                            />
+                        )
+                        : <UpdatePlaylistModal
+                            setUpdatedArtwork={setUpdatedArtwork} updatedArtwork={updatedArtwork} handleChangeUpdate={handleChangeUpdate} updatePlaylistInfo={updatePlaylistInfo} playlist={playlist} showUpdatePlaylist={showUpdatePlaylist}
+                            setShowUpdatePlaylist={setShowUpdatePlaylist} setPlaylistSongs={setPlaylistSongs} playlistSongs={playlistSongs} songs={songs} showModal={showModal} setShowModal={setShowModal} handlePlaylistSubmit={handlePlaylistSubmit} handlePlaylistChange={handlePlaylistChange} playlistFormData={playlistFormData} setShowNewPlaylist={setShowNewPlaylist} setPlaylistArtwork={setPlaylistArtwork} uploader={uploader} options={options}
+                        />
 
-            ) : (
-                ""
-            )}
+                )
+                : (
+                    ''
+                )}
 
-            <Container className="mt-5  mb-5">
-
-                <Table responsive="lg">
+            <Container className='mt-5  mb-5 overflow-auto' style={{ width: '100%', height: '500px' }}>
+                <Table responsive='xl'>
                     <thead>
                         <tr>
                             <th>#</th>
@@ -165,15 +153,15 @@ export default function PlaylistPage({ showUpdatePlaylist,
                             <th>TITLE</th>
                             <th>ALBUM</th>
                             <th>DATE ADDED</th>
-                            <th></th>
+                            <th />
                         </tr>
                     </thead>
                     <tbody>
 
                         {
-                            songs ?
+                            songs
 
-                                <>
+                                ? <>
                                     {
                                         songs.map((song, idx) => {
                                             return (
@@ -182,56 +170,90 @@ export default function PlaylistPage({ showUpdatePlaylist,
                                                     <td>{idx + 1}</td>
                                                     <td>
 
-                                                        <div className="album-wrapper">
-                                                            <img className="rounded-0" src={song.artwork} width="100px" height="100px" />
-                                                            <div className="audio-wrapper">
-                                                                <audio src={song.audio} controls></audio>
+                                                        <div className='album-wrapper'>
+                                                            <img className='rounded-0' src={song.artwork} width='70px' height='70px' />
+                                                            <div className='audio-wrapper'>
+                                                                <audio src={song.audio} controls />
                                                             </div>
                                                         </div>
 
                                                     </td>
                                                     <td>
-                                                        <div className="flex vertical text-left">
-                                                            <h5 className="title">{song.title}</h5>
-                                                            <h6>{
-                                                                song.artist.join(" • ")
-                                                            }</h6>
+                                                        <div className='flex vertical text-left'>
+                                                            <h5 className='main-song-title'>{song.title}</h5>
+                                                            <h6 className='main-artist-title'>{song.artist.join(' • ')}</h6>
                                                         </div>
 
                                                     </td>
-                                                    <td>{song.album}</td>
-                                                    <td>{song.createdAt.slice(0, 10)}</td>
+                                                    <td className='main-album-title'>{song.album}</td>
+                                                    <td className='main-date-title'>{song.createdAt.slice(0, 10)}</td>
                                                     <td>
-                                                        <div className="flex horizontal space-between" >
 
-                                                            <FontAwesomeIcon icon={faTrashCan} onClick={() => { updatePlaylistSongs(playlist?._id, song._id) }} className="icon" />
+
+                                                        <Dropdown>
+                                                            <Dropdown.Toggle id="dropdown-basic">
+                                                                <FontAwesomeIcon icon={faEllipsisVertical} className='icon' />
+                                                            </Dropdown.Toggle>
+
+                                                            <Dropdown.Menu>
+                                                                <Dropdown.Item href="" onClick={() => { updatePlaylistSongs(playlist?._id, song._id) }} ><FontAwesomeIcon
+                                                                    icon={faTrashCan}
+
+                                                                    className='icon'
+                                                                />&nbsp;
+                                                                    Remove from playlist</Dropdown.Item>
+                                                                {!song.spotify
+                                                                    ? (
+                                                                        <Dropdown.Item href="" onClick={() => { updatePlaylistSongs(playlist?._id, song._id) }} >
+                                                                            <FontAwesomeIcon
+                                                                                icon={faFileEdit}
+
+                                                                                className='icon'
+                                                                            />&nbsp;
+
+                                                                            Edit Song</Dropdown.Item>
+                                                                    )
+                                                                    : (
+                                                                        ''
+                                                                    )}
+
+                                                            </Dropdown.Menu>
+                                                        </Dropdown>
+
+
+
+
+
+
+
+
+
+                                                        {/* <div className='flex horizontal space-between'>
+                                                            <FontAwesomeIcon icon={faEllipsisVertical} className='icon' />
+
+                                                            <FontAwesomeIcon icon={faTrashCan} onClick={() => { updatePlaylistSongs(playlist?._id, song._id) }} className='icon' />
                                                             {
-                                                                !song.spotify ?
-                                                                    <FontAwesomeIcon icon={faFileEdit} onClick={() => { updatePlaylistSongs(playlist?._id, song._id) }} className="icon" />
-                                                                    : ""
-
+                                                                !song.spotify
+                                                                    ? <FontAwesomeIcon icon={faFileEdit} onClick={() => { updatePlaylistSongs(playlist?._id, song._id) }} className='icon' />
+                                                                    : ''
 
                                                             }
-                                                        </div>
+                                                        </div> */}
                                                     </td>
                                                 </tr>
                                             )
                                         })
                                     }
-                                </> :
-                                "no songs"
-
+                                </>
+                                : 'no songs'
 
                         }
 
                     </tbody>
                 </Table>
-            </ Container>
-
+            </Container>
 
             <Footer />
         </>
     )
-
-
 }

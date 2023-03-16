@@ -10,6 +10,17 @@ $primary-light-transparent-color: #ffffff77;
 $secondary-dark-color: #575a7b;
 $primary-title-weight: 600;
 $transition-color-two: #8b86ef;
+$navbar-dark: #161c2d;
+
+@keyframes cssmarquee {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
 
 
 body {
@@ -33,6 +44,21 @@ th {
   color: $primary-dark-color;
   font-weight: $primary-title-weight;
   text-transform: capitalize;
+}
+
+.main-song-title {
+  font-family: $titles-font-family;
+  color: $primary-dark-color;
+  font-weight: $primary-title-weight;
+  text-transform: capitalize;
+  font-size: 16px;
+}
+
+.main-artist-title,
+.main-album-title,
+.main-date-title {
+
+  font-size: 14px;
 }
 
 .dark {
@@ -89,6 +115,9 @@ th {
 
 }
 
+.navbar-dark {
+  background-color: $navbar-dark;
+}
 
 
 .album-wrapper {
@@ -190,4 +219,29 @@ audio {
 
 .full-width {
   width: 100vw;
+}
+
+.card-text-custom {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+
+}
+
+
+.dropdown-toggle::after {
+  content: none;
+}
+
+#dropdown-basic {
+  background-color: transparent;
+  color: $primary-dark-color;
+  border: none;
+
+}
+
+a.dropdown-item {
+  font-size: 14px;
+  color: $primary-dark-color;
 }

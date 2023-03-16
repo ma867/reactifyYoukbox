@@ -1,16 +1,20 @@
 import './Banner.scss'
-export default function Banner(props) {
-    return (
+import { Button } from 'react-bootstrap'
+export default function Banner({ setAuth, auth }) {
+  return (
 
-        <div className="banner-image full-width full-height flex justify-content-center align-items-center">
-            <div className="section-header text-center title">
-                <h2 className="fw-bold display-1 light">
-                    <span className="b-class-secondary">YOUR</span>
-                    Personal Jukebox <br />
-                    <span className="b-class-secondary">YOUR</span> Favorite Artists <br />
-                    <span className="b-class-secondary">YOUR</span> Custom Playlists <br />
-                    <span className="b-class-secondary">ONE</span> Place</h2>
-            </div>
-        </div>
-    )
+    <div className='banner-image full-width full-height flex justify-content-center align-items-center pt-5'>
+      <div className="mix-blend-mode p-3" style={{ backgroundImage: 'url("https://i.imgur.com/E1d7RkY.png")' }} >
+        {/* <img style={{ width: '600px', height: '600px' }} class="mix-blend-mode" src="https://i.imgur.com/E1d7RkY.png" /> */}
+      </div>
+      <div className='section-header text-center title p-3'>
+        <h2 className='fw-bold display-3 light p-3 main-banner-title'>
+          <span className='b-class-secondary'>Your </span> favorite songs, <br />
+          <span className='b-class-secondary'>Your </span> personal jukebox. <br /><br />
+          <Button className='banner-button' onClick={() => setAuth(true)}>Login to Start Listening</Button>
+
+        </h2>
+      </div>
+    </div>
+  )
 }
